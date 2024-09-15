@@ -1,6 +1,5 @@
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
-local UserInputService = game:GetService("UserInputService")
 local localPlayer = Players.LocalPlayer
 
 -- Создание кнопки
@@ -23,27 +22,6 @@ corner.CornerRadius = UDim.new(1, 0)
 -- Перетаскивание кнопки
 button.Draggable = true
 
--- Создание Highlight для всех игроков
-local function createHighlight(player)
-    local highlight = Instance.new("Highlight")
-    highlight.FillColor = Color3.fromRGB(255, 255, 0)
-    highlight.FillTransparency = 0.5
-    highlight.Adornee = player.Character
-    highlight.Parent = player.Character
-end
-
--- Удаление всех Highlight
-local function removeAllHighlights()
-    for _, player in pairs(Players:GetPlayers()) do
-        if player.Character then
-            local highlight = player.Character:FindFirstChildOfClass("Highlight")
-            if highlight then
-                highlight:Destroy()
-            end
-        end
-    end
-end
-
 -- Нахождение ближайшего игрока
 local function findNearestPlayer()
     local nearestPlayer = nil
@@ -62,15 +40,6 @@ local function findNearestPlayer()
     return nearestPlayer
 end
 
--- Обновление Highlight для ближайшего игрока
-local function updateHighlight()
-    removeAllHighlights()
-    local nearestPlayer = findNearestPlayer()
-    if nearestPlayer then
-        createHighlight(nearestPlayer)
-    end
-end
-
 -- Телепортация за спину ближайшего игрока
 button.MouseButton1Click:Connect(function()
     local nearestPlayer = findNearestPlayer()
@@ -80,7 +49,7 @@ button.MouseButton1Click:Connect(function()
     end
 end)
 
--- Обновление Highlight каждые 0.1 секунды
+-- Обновление каждые 0.1 секунды
 RunService.RenderStepped:Connect(function()
-    updateHighlight()
+    -- Обновление Highlight убрано
 end)
